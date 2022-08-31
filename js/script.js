@@ -3,7 +3,7 @@ const banderas = document.getElementById("banderas");
 document.addEventListener("DOMContentLoaded", e => {
     fetchData();
 });
-
+//Llamamos a la api
 const fetchData = async () => {
     try {
         const res = await fetch("https://restcountries.com/v3.1/all");
@@ -17,6 +17,7 @@ const fetchData = async () => {
     };
 };
 
+//Mostramos la informacion de la api en el dom
 const banderasId = data => {
     let elementos = "";
     data.forEach(element => {
@@ -40,3 +41,28 @@ const banderasId = data => {
 };
 
 
+///Boton Dark mode
+
+const btnSwitch = document.querySelector("#switch");
+
+btnSwitch.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    btnSwitch.classList.toggle("active");
+
+
+    //Lo guardamos en el localstorage
+
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("dark-mode", "true");
+    } else {
+        localStorage.setItem("dark-mode", "false");
+    }
+});
+//El modo actual
+if (localStorage.getItem("dark-mode") === "true") {
+    document.body.classList.add("dark");
+    btnSwitch.classList.add("active");
+} else {
+    document.body.classList.remove("dark");
+    btnSwitch.classList.remove("active");
+}
