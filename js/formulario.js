@@ -9,7 +9,7 @@ class User {
     };
 };
 
-let precio = [1600];
+
 
 let usuarios = [];
 
@@ -21,7 +21,7 @@ const botonReserva = document.getElementById("botonReserva");
 const divReserva = document.getElementById("divReserva");
 
 
-////Subo nueva reserva al local storage
+
 formUser.addEventListener("submit", (e) => {
     e.preventDefault();
     console.log(e.target);
@@ -56,20 +56,20 @@ botonReserva.addEventListener("click", () => {
   <div class="card-body">
     <h5 class="card-title">Perfecto ${usuario.nombre}</h5>
     <p class="card-text">Su vuelo a ${usuario.paisDestino} a sido reservado para el ${usuario.fechaIda} hasta el ${usuario.fechaVuelta} desde el aeropuerto de ${usuario.paisOrigen}</p>
-    <p class="card-text">con un total de $${precio} </p>
     <button class="btn btn-primary">Cancelar reserva</button>
   </div>
 </div> `
     });
     divReserva.innerHTML = itemDiv;
 
-    //Borramos la carta de reserva que se creo con el formulario 
+
     arrayUser.forEach((usuario, indice) => {
         let botonCard = document.getElementById(`usuario${indice}`).lastElementChild.lastElementChild;
         botonCard.addEventListener("click", () => {
             document.getElementById(`usuario${indice}`).remove();
-            usuario.splice(indice, 1);
-            usuario.removeItem(`usuario${indice}`);
+            usuarios.splice(indice, 1);
+            localStorage.setItem("usuarios", JSON.stringify(usuarios));
+            console.log(`${usuario.nombre} Fue eliminado`);
             Toastify({
                 text: "Reserva cancela",
                 duration: 3000,
@@ -88,22 +88,6 @@ botonReserva.addEventListener("click", () => {
     });
 });
 
-////Buscador de paises
-const inputId = document.getElementById("inputForm");
-const form = document.getElementById("formulario");
-const formularioData = data => {
-    form.addEventListener("keyup", e => {
-        e.preventDefault();
-        const letraUser = inputId.value.toLowerCase();
-        const arrayFilter = data.filter(item => {
-            const inputData = item.translations.spa.common.toLowerCase();
-            if (inputData.indexOf(letraUser) !== -1) {
-                return item;
-            };
-        });
-        banderasId(arrayFilter);
-    });
-};
 
 
 

@@ -3,7 +3,7 @@ const banderas = document.getElementById("banderas");
 document.addEventListener("DOMContentLoaded", e => {
     fetchData();
 });
-//Llamamos a la api
+
 const fetchData = async () => {
     try {
         const res = await fetch("https://restcountries.com/v3.1/all");
@@ -17,7 +17,7 @@ const fetchData = async () => {
     };
 };
 
-//Mostramos la informacion de la api en el dom
+//Muestro la api en el dom
 const banderasId = data => {
     let elementos = "";
     data.forEach(element => {
@@ -29,7 +29,7 @@ const banderasId = data => {
                     <p><b>Capial:</b> ${element.capital}</p >
                     <p><b>Poblacion:</b> ${element.population}</p>
                     <p><b>${element.continents}</b></p>
-                  
+                 
                     
                 </div>
             </div>
@@ -38,6 +38,23 @@ const banderasId = data => {
             `
     });
     banderas.innerHTML = elementos;
+};
+
+////Buscador de paises
+const inputId = document.getElementById("inputForm");
+const form = document.getElementById("formulario");
+const formularioData = data => {
+    form.addEventListener("keyup", e => {
+        e.preventDefault();
+        const letraUser = inputId.value.toLowerCase();
+        const arrayFilter = data.filter(item => {
+            const inputData = item.translations.spa.common.toLowerCase();
+            if (inputData.indexOf(letraUser) !== -1) {
+                return item;
+            };
+        });
+        banderasId(arrayFilter);
+    });
 };
 
 
